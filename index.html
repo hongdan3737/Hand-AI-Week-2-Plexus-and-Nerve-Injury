@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 2 — Nerve Injury &amp; Brachial Plexus | Study Guide</title>
+<style>
+  :root{
+    --maroon:#800000; --maroon-dark:#5c0000; --ink:#1a1a1a; --paper:#faf8f5;
+    --card:#ffffff; --line:#e3ddd5; --muted:#6b6259; --good:#1f7a4d; --bad:#b3261e;
+    --accent:#b08a3e; --soft:#f1ece4;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);background:var(--paper);line-height:1.55}
+  header.top{background:linear-gradient(135deg,var(--maroon),var(--maroon-dark));color:#fff;padding:18px 22px;
+    display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  header.top h1{font-size:1.15rem;margin:0;font-weight:600;letter-spacing:.2px}
+  header.top .sub{font-size:.78rem;opacity:.85}
+  .status{display:flex;gap:14px;align-items:center;font-size:.8rem}
+  .pill{background:rgba(255,255,255,.16);padding:5px 11px;border-radius:20px;white-space:nowrap}
+  .wrap{max-width:920px;margin:0 auto;padding:22px}
+  .screen{display:none;animation:fade .35s ease}
+  .screen.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  h2{color:var(--maroon);font-size:1.4rem;margin:.2em 0 .4em}
+  h3{color:var(--maroon-dark);font-size:1.08rem;margin:1.2em 0 .3em}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;margin:16px 0;
+    box-shadow:0 1px 3px rgba(0,0,0,.04)}
+  button{font-family:inherit;cursor:pointer;border:none;border-radius:10px;font-size:.95rem;transition:.15s}
+  .btn{background:var(--maroon);color:#fff;padding:12px 20px;font-weight:600}
+  .btn:hover{background:var(--maroon-dark)}
+  .btn.ghost{background:transparent;color:var(--maroon);border:1.5px solid var(--maroon)}
+  .btn.ghost:hover{background:var(--soft)}
+  .btn.small{padding:8px 14px;font-size:.85rem}
+  .choices{display:flex;flex-direction:column;gap:10px;margin:16px 0}
+  .choice{text-align:left;background:#fff;border:1.5px solid var(--line);padding:13px 16px;border-radius:10px;
+    color:var(--ink);font-size:.96rem;display:flex;gap:11px;align-items:flex-start}
+  .choice:hover{border-color:var(--maroon);background:var(--soft)}
+  .choice .key{font-weight:700;color:var(--maroon);min-width:18px}
+  .choice.correct{border-color:var(--good);background:#eaf6ef}
+  .choice.wrong{border-color:var(--bad);background:#fbeae9}
+  .choice:disabled{cursor:default;opacity:1}
+  .feedback{border-radius:10px;padding:14px 16px;margin-top:14px;font-size:.92rem;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:#eaf6ef;border:1px solid #bfe3cf}
+  .feedback.no{background:#fbeae9;border:1px solid #f0c5c1}
+  .src{font-size:.8rem;color:var(--muted);margin-top:8px;font-style:italic}
+  .reviewlink{display:inline-block;margin-top:8px;font-size:.85rem;color:var(--maroon);text-decoration:underline;
+    background:none;padding:0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:640px){.grid{grid-template-columns:1fr}.status{display:none}}
+  .modecard{cursor:pointer;border:1.5px solid var(--line);border-radius:14px;padding:22px;background:#fff;text-align:left}
+  .modecard:hover{border-color:var(--maroon);box-shadow:0 4px 14px rgba(128,0,0,.08)}
+  .modecard h3{margin-top:0}
+  .toc a{display:block;padding:7px 0;color:var(--maroon-dark);text-decoration:none;border-bottom:1px solid var(--soft)}
+  .toc a:hover{color:var(--maroon);padding-left:5px}
+  .sgsec{scroll-margin-top:80px}
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.88rem}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:var(--soft);color:var(--maroon-dark)}
+  .flash{perspective:1200px;margin:16px 0}
+  .flashinner{position:relative;width:100%;min-height:230px;transition:transform .55s;transform-style:preserve-3d;cursor:pointer}
+  .flashinner.flipped{transform:rotateY(180deg)}
+  .flashface{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+    padding:26px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:#fff}
+  .flashface.back{transform:rotateY(180deg);background:var(--soft)}
+  .flashface .label{position:absolute;top:12px;left:16px;font-size:.72rem;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
+  .progressbar{height:7px;background:var(--soft);border-radius:4px;overflow:hidden;margin:10px 0}
+  .progressbar > div{height:100%;background:var(--accent);width:0;transition:.4s}
+  input[type=text]{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;font-size:.95rem;font-family:inherit}
+  .qa-item{border-bottom:1px solid var(--line);padding:12px 0;cursor:pointer}
+  .qa-q{font-weight:600;color:var(--maroon-dark)}
+  .qa-a{display:none;margin-top:8px;font-size:.92rem}
+  .qa-item.open .qa-a{display:block}
+  .streakdots{display:flex;gap:5px;flex-wrap:wrap}
+  .dot{width:13px;height:13px;border-radius:50%;background:var(--soft);border:1px solid var(--line)}
+  .dot.on{background:var(--good);border-color:var(--good)}
+  .note{font-size:.82rem;color:var(--muted)}
+  .itemkind{font-size:.85rem;color:var(--maroon-dark);background:var(--soft);border-radius:8px;padding:8px 12px;margin:4px 0 10px}
+  .figcap{font-size:.78rem;color:var(--muted);text-align:center;margin-top:4px}
+  svg{max-width:100%;height:auto;display:block;margin:0 auto}
+  .tag{display:inline-block;background:var(--soft);color:var(--maroon-dark);font-size:.72rem;padding:2px 9px;border-radius:12px;margin-right:6px}
+  .endbig{text-align:center;padding:40px 20px}
+  .endbig .big{font-size:3rem}
+  footer{max-width:920px;margin:20px auto;padding:18px 22px;font-size:.78rem;color:var(--muted);border-top:1px solid var(--line)}
+  .kbd{font-family:ui-monospace,Menlo,monospace;background:var(--soft);padding:1px 6px;border-radius:5px;font-size:.82rem}
+</style>
+</head>
+<body>
+<header class="top">
+  <div>
+    <h1>Nerve Injury &amp; Brachial Plexus</h1>
+    <div class="sub">Hand Surgery Education · Week 2 Study Guide</div>
+  </div>
+  <div class="status" id="statusBar" style="visibility:hidden">
+    <span class="pill" id="timerPill">⏱ 0:00</span>
+    <span class="pill" id="streakPill">🔥 Streak 0</span>
+    <button class="btn ghost small" style="color:#fff;border-color:rgba(255,255,255,.6)" onclick="endSession('done')">Done reviewing</button>
+  </div>
+</header>
+
+<div class="wrap">
+
+<!-- ============ WELCOME ============ -->
+<section id="welcome" class="screen active">
+  <div class="card">
+    <h2>Welcome — let's calibrate.</h2>
+    <p>This guide covers <strong>adult nerve injury and brachial plexus</strong> reconstruction, built entirely from your Week 2 reading list (Noland JAAOS 2019, Moore PRS 2014, Huayllani Ann Plast Surg 2020, Weber/Isaacs JAAOS 2023, Barbour/Mackinnon JHS 2012, Isaacs/Cochran BJJ 2019, plus the Green's and Handthology chapters).</p>
+    <p><strong>How comfortable are you with this material?</strong></p>
+    <div class="grid" style="margin-top:16px">
+      <div class="modecard" onclick="startBeginner()">
+        <h3>🌱 Beginner</h3>
+        <p class="note">Start with a structured study guide (diagrams + key concepts), then move into questions when you're ready.</p>
+      </div>
+      <div class="modecard" onclick="startExpert()">
+        <h3>⚡ Expert</h3>
+        <p class="note">Skip ahead. Go straight into multiple-choice questions and flashcards to test mastery.</p>
+      </div>
+    </div>
+    <p class="note" style="margin-top:18px">Session ends automatically at <strong>30 minutes</strong>, after <strong>10 correct in a row</strong>, or whenever you hit <strong>Done reviewing</strong>.</p>
+  </div>
+</section>
+
+<!-- ============ STUDY GUIDE ============ -->
+<section id="studyguide" class="screen">
+  <div class="card">
+    <h2>Study Guide</h2>
+    <p class="note">Review at your own pace. When you're ready, jump into questions.</p>
+    <div class="toc" id="toc"></div>
+    <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn" onclick="goQuiz()">I'm done reviewing → Start questions</button>
+      <button class="btn ghost" onclick="show('home')">Back to menu</button>
+    </div>
+  </div>
+  <div id="sgContent"></div>
+  <div class="card" style="text-align:center">
+    <button class="btn" onclick="goQuiz()">Start questions →</button>
+  </div>
+</section>
+
+<!-- ============ HOME / MODE MENU ============ -->
+<section id="home" class="screen">
+  <div class="card">
+    <h2>Choose an activity</h2>
+    <div class="grid">
+      <div class="modecard" onclick="goQuiz()"><h3>❓ Quiz me</h3><p class="note">Questions and flashcards alternate — both build your 10-in-a-row streak. Miss one and I'll point you to the reading.</p></div>
+      <div class="modecard" onclick="goFlashBrowse()"><h3>🃏 Flashcards only</h3><p class="note">No-pressure recall practice. Flip to check yourself; doesn't affect the streak.</p></div>
+      <div class="modecard" onclick="show('studyguide')"><h3>📖 Study guide</h3><p class="note">Re-read the diagrams and core concepts.</p></div>
+      <div class="modecard" onclick="goAsk()"><h3>💬 Ask a question</h3><p class="note">Searchable, literature-backed answers.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ QUIZ / INTERLEAVED SESSION ============ -->
+<section id="quiz" class="screen">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span class="tag" id="qTopic">—</span>
+      <span class="note" id="qCount"></span>
+    </div>
+    <div class="streakdots" id="streakDots" style="margin:10px 0"></div>
+
+    <!-- Multiple-choice block -->
+    <div id="mcqBlock">
+      <h3 id="qText" style="margin-top:6px"></h3>
+      <div class="choices" id="qChoices"></div>
+    </div>
+
+    <!-- Flashcard block (interleaved, self-graded into the streak) -->
+    <div id="flashBlock" style="display:none">
+      <div class="itemkind">🃏 Flashcard — recall the answer, then grade yourself honestly. It counts toward your streak.</div>
+      <div class="flash"><div class="flashinner" id="qFlashInner" onclick="revealFlash()">
+        <div class="flashface front"><div class="label">Prompt — tap to reveal</div><div id="qfFront" style="font-size:1.08rem"></div></div>
+        <div class="flashface back"><div class="label">Answer</div><div id="qfBack"></div></div>
+      </div></div>
+      <div id="flashGrade" style="display:none;gap:10px;margin-top:12px">
+        <button class="btn" style="background:var(--good)" onclick="gradeFlash(true)">✓ I knew it</button>
+        <button class="btn" style="background:var(--bad)" onclick="gradeFlash(false)">✗ Missed it</button>
+      </div>
+    </div>
+
+    <div class="feedback" id="qFeedback"></div>
+    <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn" id="nextBtn" style="display:none" onclick="nextItem()">Next →</button>
+      <button class="btn ghost small" onclick="goFlashBrowse()">Browse flashcards only</button>
+      <button class="btn ghost small" onclick="show('home')">Menu</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FLASHCARDS ============ -->
+<section id="flash" class="screen">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span class="tag" id="fTopic">Flashcard</span>
+      <span class="note" id="fCount"></span>
+    </div>
+    <div class="flash"><div class="flashinner" id="flashInner" onclick="flipCard()">
+      <div class="flashface front"><div class="label">Prompt — tap to flip</div><div id="fFront" style="font-size:1.1rem"></div></div>
+      <div class="flashface back"><div class="label">Answer</div><div id="fBack"></div></div>
+    </div></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+      <button class="btn" onclick="nextFlash()">Next card →</button>
+      <button class="btn ghost small" onclick="goQuiz()">Switch to quiz</button>
+      <button class="btn ghost small" onclick="show('home')">Menu</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ASK ============ -->
+<section id="ask" class="screen">
+  <div class="card">
+    <h2>Ask a question</h2>
+    <p class="note">Type a keyword or question (e.g. "Oberlin", "Horner", "conduit length", "elbow flexion priority"). Answers are drawn from your Week 2 sources.</p>
+    <input type="text" id="askInput" placeholder="Search the material…" oninput="searchQA()" autocomplete="off">
+    <div id="qaResults" style="margin-top:14px"></div>
+    <div style="margin-top:16px"><button class="btn ghost" onclick="show('home')">Menu</button></div>
+  </div>
+</section>
+
+<!-- ============ END ============ -->
+<section id="end" class="screen">
+  <div class="card endbig">
+    <div class="big">🎓</div>
+    <h2 id="endTitle">Session complete</h2>
+    <p id="endMsg" class="note"></p>
+    <div id="endStats" style="margin:18px 0;font-size:.95rem"></div>
+    <button class="btn" onclick="restart()">Start a new session</button>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <strong>Sources (Week 2 reading list):</strong>
+  <div id="refList"></div>
+  <p style="margin-top:12px">Diagrams are original schematics created for this guide (not reproduced from the copyrighted texts). All facts and figures are drawn from the sources above; this tool is for educational review and is not a substitute for primary literature or clinical judgment.</p>
+</footer>
+
+<script>
+/* ====================================================================
+   DATA — every fact traced to a Week 2 source. Citations verified
+   against the extracted PDF text.
+   ==================================================================== */
+
+const REFS = {
+  noland:"Noland SS, Bishop AT, Spinner RJ, Shin AY. Adult Traumatic Brachial Plexus Injuries. J Am Acad Orthop Surg. 2019;27(19):705–716.",
+  moore:"Moore AM, Franco M, Tung TH. Motor and Sensory Nerve Transfers in the Forearm and Hand. Plast Reconstr Surg. 2014;134(4):721–730.",
+  huayllani:"Huayllani MT, Boczar D, Forte AJ, Rinker B. Evidence-Based Approach to Nerve Gap Repair in the Upper Extremity. Ann Plast Surg. 2020;84(5 Suppl 5):S369–S374.",
+  weber:"Weber MB, Isaacs JE. Digital Nerve Injury: Assessment and Treatment. J Am Acad Orthop Surg. 2023;31(15):802–812.",
+  barbour:"Barbour J, Yee A, Kahn LC, Mackinnon SE. Supercharged End-to-Side Anterior Interosseous to Ulnar Motor Nerve Transfer for Intrinsic Musculature Reinnervation. J Hand Surg Am. 2012;37(10):2150–2159.",
+  isaacs:"Isaacs J, Cochran AR. Nerve transfers for peripheral nerve injury in the upper limb: a case-based review. Bone Joint J. 2019;101-B(2):124–131.",
+  handnr:"Handthology — Nerve Injury & Repair (chapter).",
+  handplx:"Handthology — Adult Brachial Plexus Injuries (chapter).",
+  greens:"Green's Operative Hand Surgery, 6th ed. (nerve injury / brachial plexus chapters)."
+};
+
+/* -------- STUDY GUIDE SECTIONS (with inline original SVG diagrams) -------- */
+const SG = [
+ {id:"sg-anatomy", title:"1. Microscopic nerve anatomy",
+  html:`
+  <p>A peripheral nerve is a packaged bundle of axons wrapped in connective-tissue layers, from inside out:</p>
+  <svg viewBox="0 0 640 250" role="img" aria-label="Peripheral nerve cross-section">
+    <rect x="0" y="0" width="640" height="250" fill="#fff"/>
+    <ellipse cx="320" cy="125" rx="300" ry="110" fill="#f6efe4" stroke="#b08a3e" stroke-width="3"/>
+    <text x="320" y="28" text-anchor="middle" font-size="13" fill="#5c0000" font-weight="bold">Outer epineurium (+ vasa nervorum on surface)</text>
+    <g>
+      <ellipse cx="180" cy="130" rx="95" ry="70" fill="#fbe9e7" stroke="#800000" stroke-width="2.5"/>
+      <ellipse cx="430" cy="120" rx="95" ry="70" fill="#fbe9e7" stroke="#800000" stroke-width="2.5"/>
+      <text x="180" y="210" text-anchor="middle" font-size="11" fill="#800000">Fascicle (perineurium)</text>
+      <text x="430" y="200" text-anchor="middle" font-size="11" fill="#800000">Fascicle (perineurium)</text>
+    </g>
+    <g fill="#1f7a4d">
+      <circle cx="155" cy="115" r="11"/><circle cx="200" cy="120" r="11"/><circle cx="178" cy="150" r="11"/><circle cx="210" cy="148" r="9"/>
+      <circle cx="405" cy="108" r="11"/><circle cx="450" cy="115" r="11"/><circle cx="425" cy="142" r="11"/><circle cx="460" cy="140" r="9"/>
+    </g>
+    <text x="178" y="118" text-anchor="middle" font-size="8" fill="#fff">ax</text>
+    <text x="320" y="240" text-anchor="middle" font-size="10.5" fill="#6b6259">Green = myelinated axon in an endoneurial tube · grouped into fascicles · cushioned by inner epineurium</text>
+  </svg>
+  <p><strong>Layers:</strong> each myelinated <em>axon</em> (insulated by Schwann-cell myelin) sits in an <em>endoneurial tube</em> (endoneurium). Tubes group into <em>fascicles</em> bounded by <em>perineurium</em>, which acts as an extension of the blood–nerve barrier and holds raised internal pressure (so fascicles "pooch" out from a cut end). Fascicles are bundled by inner epineurium and the whole nerve is wrapped in <em>outer epineurium</em>; blood vessels run on its surface.</p>
+  <p>Internal topography is a complex interfascicular plexus proximally but becomes more functionally segregated distally — the basis for modern fascicular nerve transfers.</p>
+  <p class="src">Source: Handthology — Nerve Injury &amp; Repair; Green's 6th ed.</p>`},
+
+ {id:"sg-wallerian", title:"2. Wallerian degeneration & regeneration",
+  html:`
+  <p>When an axon is divided, the distal segment loses contact with the cell body. <strong>Wallerian degeneration</strong> begins within <strong>24–48 hours</strong>: Schwann cells transdifferentiate to a pro-regenerative phenotype and recruit macrophages to clear axonal and myelin debris.</p>
+  <p>The proximal stump sprouts new axons, which are guided distally by columns of Schwann cells called <strong>Bands of Büngner</strong>. Axons regenerate at roughly <strong>1 mm/day (≈1 inch/month)</strong> — the rate that governs all timing decisions in nerve surgery.</p>
+  <p><strong>Why timing matters:</strong> the motor end plate degenerates over time after denervation. If reinnervation does not arrive in time (broadly within ~12–18 months), the end plate becomes irreversibly non-functional and the muscle cannot be salvaged by a nerve repair — even if a signal eventually reaches it.</p>
+  <p class="src">Source: Handthology — Nerve Injury &amp; Repair; Noland JAAOS 2019.</p>`},
+
+ {id:"sg-classification", title:"3. Seddon & Sunderland classification",
+  html:`
+  <p>Two classification systems describe injury severity. Seddon has 3 tiers; Sunderland subdivides into 5 degrees (MacKinnon adds a 6th, "mixed").</p>
+  <svg viewBox="0 0 660 300" role="img" aria-label="Seddon and Sunderland classification ladder">
+    <rect x="0" y="0" width="660" height="300" fill="#fff"/>
+    <g font-size="12">
+      <rect x="20" y="20" width="620" height="42" fill="#eaf6ef" stroke="#1f7a4d"/>
+      <text x="30" y="38" font-weight="bold" fill="#1f7a4d">Neurapraxia = Sunderland I</text>
+      <text x="30" y="55" fill="#333">Myelin/conduction block; axon &amp; sheaths intact → full spontaneous recovery (min–months)</text>
+
+      <rect x="20" y="70" width="620" height="42" fill="#f3f8ec" stroke="#7aa53a"/>
+      <text x="30" y="88" font-weight="bold" fill="#557a1f">Axonotmesis = Sunderland II &amp; III</text>
+      <text x="30" y="105" fill="#333">Axon ruptured, endoneurial tubes intact (II) or disrupted (III) → recovery, often slow/incomplete</text>
+
+      <rect x="20" y="120" width="620" height="42" fill="#fff4e0" stroke="#b08a3e"/>
+      <text x="30" y="138" font-weight="bold" fill="#8a6a1e">Sunderland IV</text>
+      <text x="30" y="155" fill="#333">Axon, endoneurium &amp; perineurium disrupted; epineurium intact (neuroma-in-continuity) → surgery</text>
+
+      <rect x="20" y="170" width="620" height="42" fill="#fbeae9" stroke="#b3261e"/>
+      <text x="30" y="188" font-weight="bold" fill="#b3261e">Neurotmesis = Sunderland V</text>
+      <text x="30" y="205" fill="#333">Complete transection, epineurium discontinuous (proximal &amp; distal stumps) → surgery required</text>
+
+      <rect x="20" y="220" width="620" height="40" fill="#f1ece4" stroke="#6b6259"/>
+      <text x="30" y="238" font-weight="bold" fill="#5c0000">Sunderland VI (MacKinnon) — Mixed</text>
+      <text x="30" y="254" fill="#333">More than one degree across the zone of injury; hardest to diagnose &amp; reconstruct</text>
+    </g>
+    <text x="330" y="288" text-anchor="middle" font-size="10.5" fill="#6b6259">Higher degree = more disrupted architecture = less spontaneous recovery</text>
+  </svg>
+  <p><strong>Key clinical rule:</strong> neurapraxia and axonotmesis (Sunderland I–II) recover spontaneously; Sunderland III is variable; Sunderland IV–V generally will <em>not</em> recover without surgery. Early after injury, axonotmetic (will recover) and internally ruptured Sunderland III/IV nerves <em>cannot be reliably distinguished</em> — which is why serial exam and EMG over months are needed.</p>
+  <p class="src">Source: Handthology — Nerve Injury &amp; Repair (MacKinnon-modified Sunderland); Barbour JHS 2012.</p>`},
+
+ {id:"sg-eval", title:"4. Evaluating nerve injury (exam, EMG, imaging)",
+  html:`
+  <p><strong>Electrodiagnostics:</strong> baseline EMG/NCS are obtained <strong>3–4 weeks after injury</strong> — after Wallerian degeneration, so distal denervation changes (fibrillations) appear. Earlier testing risks false negatives. Distal axons may still conduct for the first ~3–11 days.</p>
+  <p><strong>Intra-op:</strong> a <strong>nerve action potential (NAP)</strong> across a neuroma-in-continuity predicts recovery → neurolysis alone; an absent NAP means no regeneration → resect and reconstruct. SSEPs/MEPs help localize pre- vs postganglionic lesions.</p>
+  <p><strong>MRC muscle grading (0–5):</strong> 0 none · 1 trace contraction · 2 movement with gravity eliminated · 3 full ROM against gravity · 4 against gravity + resistance · 5 normal. A higher grade cannot be assigned unless the lesser grade's criterion is met. Donor muscles for transfer should be ≥ M4.</p>
+  <p class="src">Source: Noland JAAOS 2019; Handthology — Nerve Repair; Moore PRS 2014.</p>`},
+
+ {id:"sg-plexus-anat", title:"5. Brachial plexus anatomy",
+  html:`
+  <p>The plexus is formed by five roots — <strong>C5, C6, C7, C8, T1</strong> — organized as <strong>Roots → Trunks → Divisions → Cords → Branches</strong>. Variants: prefixed (C4 contribution) and postfixed (T2).</p>
+  <svg viewBox="0 0 1000 540" role="img" aria-label="Complete brachial plexus with all named branches">
+    <rect x="0" y="0" width="1000" height="540" fill="#fff"/>
+    <!-- column headers -->
+    <g font-size="12" font-weight="bold" fill="#5c0000" text-anchor="middle">
+      <text x="135" y="20">ROOTS</text><text x="250" y="20">TRUNKS</text>
+      <text x="380" y="20">DIVISIONS</text><text x="520" y="20">CORDS</text>
+      <text x="725" y="20">TERMINAL BRANCHES</text>
+    </g>
+
+    <!-- ===== connecting lines (drawn first, labels on top) ===== -->
+    <!-- roots -> trunks -->
+    <g stroke="#800000" stroke-width="2.4" fill="none">
+      <line x1="150" y1="95" x2="250" y2="122"/><line x1="150" y1="150" x2="250" y2="122"/>
+      <line x1="150" y1="240" x2="250" y2="240"/>
+      <line x1="150" y1="330" x2="250" y2="360"/><line x1="150" y1="390" x2="250" y2="360"/>
+    </g>
+    <!-- trunks -> divisions -->
+    <g stroke="#557a1f" stroke-width="2" fill="none">
+      <line x1="250" y1="122" x2="380" y2="95"/><line x1="250" y1="122" x2="380" y2="150"/>
+      <line x1="250" y1="240" x2="380" y2="220"/><line x1="250" y1="240" x2="380" y2="265"/>
+      <line x1="250" y1="360" x2="380" y2="335"/><line x1="250" y1="360" x2="380" y2="385"/>
+    </g>
+    <!-- divisions -> cords -->
+    <g stroke="#b88a2e" stroke-width="2" fill="none">
+      <line x1="380" y1="95" x2="520" y2="120"/><line x1="380" y1="220" x2="520" y2="120"/>
+      <line x1="380" y1="150" x2="520" y2="250"/><line x1="380" y1="265" x2="520" y2="250"/><line x1="380" y1="385" x2="520" y2="250"/>
+      <line x1="380" y1="335" x2="520" y2="370"/>
+    </g>
+    <!-- cords -> terminal branches -->
+    <g stroke="#1a1a1a" stroke-width="2.2" fill="none">
+      <line x1="520" y1="120" x2="700" y2="70"/>            <!-- lat cord -> musculocut -->
+      <line x1="520" y1="120" x2="700" y2="300"/>           <!-- lateral root of median -->
+      <line x1="520" y1="250" x2="700" y2="175"/>           <!-- post cord -> axillary -->
+      <line x1="520" y1="250" x2="700" y2="235"/>           <!-- post cord -> radial -->
+      <line x1="520" y1="370" x2="700" y2="380"/>           <!-- med cord -> ulnar -->
+      <line x1="520" y1="370" x2="700" y2="300"/>           <!-- medial root of median -->
+    </g>
+
+    <!-- ===== pre-terminal branch ticks ===== -->
+    <g stroke="#9c6b6b" stroke-width="1.3" fill="none">
+      <line x1="150" y1="95" x2="78" y2="58"/>      <!-- dorsal scapular off C5 -->
+      <line x1="150" y1="240" x2="78" y2="300"/>    <!-- long thoracic -->
+      <line x1="250" y1="122" x2="250" y2="55"/>    <!-- suprascapular -->
+      <line x1="250" y1="122" x2="332" y2="74"/>    <!-- n. to subclavius -->
+      <line x1="520" y1="120" x2="520" y2="62"/>    <!-- lateral pectoral -->
+      <line x1="520" y1="250" x2="506" y2="298"/>   <!-- upper subscap -->
+      <line x1="520" y1="250" x2="506" y2="322"/>   <!-- thoracodorsal -->
+      <line x1="520" y1="250" x2="506" y2="346"/>   <!-- lower subscap -->
+      <line x1="520" y1="370" x2="556" y2="424"/>   <!-- medial pectoral -->
+      <line x1="520" y1="370" x2="556" y2="449"/>   <!-- medial brachial cut -->
+      <line x1="520" y1="370" x2="556" y2="474"/>   <!-- medial antebrachial cut -->
+    </g>
+
+    <!-- nodes -->
+    <g fill="#800000"><circle cx="250" cy="122" r="4"/><circle cx="250" cy="240" r="4"/><circle cx="250" cy="360" r="4"/></g>
+    <g fill="#b88a2e"><circle cx="520" cy="120" r="4.5"/><circle cx="520" cy="250" r="4.5"/><circle cx="520" cy="370" r="4.5"/></g>
+
+    <!-- ===== text labels ===== -->
+    <!-- roots -->
+    <g font-size="12" font-weight="bold" fill="#1a1a1a" text-anchor="end">
+      <text x="148" y="99">C5</text><text x="148" y="154">C6</text><text x="148" y="244">C7</text>
+      <text x="148" y="334">C8</text><text x="148" y="394">T1</text>
+    </g>
+    <!-- trunks -->
+    <g font-size="10.5" fill="#800000" text-anchor="middle">
+      <text x="250" y="138">Upper</text><text x="250" y="256">Middle</text><text x="250" y="376">Lower</text>
+    </g>
+    <!-- divisions a/p -->
+    <g font-size="9" fill="#557a1f" text-anchor="middle">
+      <text x="392" y="92">ant</text><text x="392" y="153">post</text>
+      <text x="392" y="217">ant</text><text x="392" y="268">post</text>
+      <text x="392" y="332">ant</text><text x="392" y="388">post</text>
+    </g>
+    <!-- cords -->
+    <g font-size="10.5" font-weight="bold" fill="#8a6a1e" text-anchor="middle">
+      <text x="520" y="108">Lateral</text><text x="520" y="238">Posterior</text><text x="520" y="388">Medial</text>
+    </g>
+
+    <!-- pre-terminal branch labels -->
+    <g font-size="9.5" fill="#5c0000">
+      <text x="6" y="50">Dorsal scapular n.</text><text x="6" y="62" font-size="8" fill="#8a7">rhomboids, lev. scap. (C5)</text>
+      <text x="6" y="300">Long thoracic n.</text><text x="6" y="312" font-size="8" fill="#8a7">serratus ant. (C5–C7)</text>
+      <text x="250" y="48" text-anchor="middle">Suprascapular n.</text><text x="250" y="38" text-anchor="middle" font-size="8" fill="#8a7">supra/infraspinatus</text>
+      <text x="338" y="72">N. to subclavius</text>
+      <text x="520" y="54" text-anchor="middle">Lateral pectoral n.</text>
+    </g>
+    <!-- posterior cord ULTRA branches (white bg for readability over lines) -->
+    <g font-size="9.5" fill="#5c0000" text-anchor="end">
+      <rect x="392" y="291" width="118" height="12" fill="#fff"/><text x="508" y="301">Upper subscapular n.</text>
+      <rect x="404" y="315" width="106" height="12" fill="#fff"/><text x="508" y="325">Thoracodorsal n.</text>
+      <rect x="392" y="339" width="118" height="12" fill="#fff"/><text x="508" y="349">Lower subscapular n.</text>
+    </g>
+    <!-- medial cord cutaneous + pectoral branches -->
+    <g font-size="9.5" fill="#5c0000">
+      <text x="560" y="428">Medial pectoral n.</text>
+      <text x="560" y="453">Medial brachial cutaneous n.</text>
+      <text x="560" y="478">Medial antebrachial cutaneous n.</text>
+    </g>
+
+    <!-- median formation roots -->
+    <g font-size="8" fill="#6b6259" font-style="italic">
+      <text x="612" y="196">lateral root</text><text x="612" y="345">medial root</text>
+    </g>
+
+    <!-- terminal branches -->
+    <g font-size="11.5" font-weight="bold" fill="#1a1a1a">
+      <text x="704" y="68">Musculocutaneous n.</text>
+      <text x="704" y="173">Axillary n.</text>
+      <text x="704" y="233">Radial n.</text>
+      <text x="704" y="298">Median n.</text>
+      <text x="704" y="378">Ulnar n.</text>
+    </g>
+    <g font-size="8.5" font-style="italic" fill="#6b6259">
+      <text x="704" y="82">coracobrachialis, biceps, brachialis</text>
+      <text x="704" y="187">deltoid, teres minor</text>
+      <text x="704" y="247">triceps, wrist/finger extensors</text>
+      <text x="704" y="312">forearm flexors/pronators, thenar</text>
+      <text x="704" y="392">FCU, FDP IV–V, intrinsics</text>
+    </g>
+
+    <text x="410" y="524" text-anchor="middle" font-size="10" fill="#6b6259">Roots→Trunks→Divisions→Cords→Branches · Posterior cord = <tspan font-weight="bold">ULTRA</tspan> (Upper subscapular, thoracoDorsal, Lower subscapular, Radial, Axillary) · C5 also feeds the phrenic n.</text>
+  </svg>
+  <p>Color-coded function: <strong>C5 shoulder, C6 elbow, C7 wrist, C8/T1 hand.</strong></p>
+  <p><strong>Pre- vs postganglionic</strong> (relative to the dorsal root ganglion) is the pivotal distinction:</p>
+  <ul>
+    <li><strong>Preganglionic (avulsion):</strong> proximal to the DRG, in continuity with cord but torn from it. Cannot be grafted (no proximal stump). Clues: <strong>Horner syndrome</strong> (miosis, ptosis, anhidrosis = T1 avulsion), rhomboid/serratus weakness, pseudomeningocele on CT myelogram, preserved sensory NAP with insensate skin.</li>
+    <li><strong>Postganglionic (rupture):</strong> distal to the DRG; a viable proximal spinal nerve can serve as a graft donor.</li>
+  </ul>
+  <p class="src">Source: Noland JAAOS 2019; Handthology — Plexus; Green's 6th ed.</p>`},
+
+ {id:"sg-plexus-recon", title:"6. Brachial plexus — timing & reconstruction",
+  html:`
+  <p><strong>Timing:</strong> sharp lacerations → immediate primary repair. Blunt rupture → tag and repair at 3–4 weeks. Closed injuries → explore at <strong>3–6 months</strong> (earlier, ~3–6 weeks, if root avulsion is strongly suspected, since waiting is futile). Nerve grafting/transfer is generally not offered beyond ~12 months (occasionally distal transfers to 12–18 months).</p>
+  <p><strong>Reconstruction priority order:</strong></p>
+  <ol>
+    <li><strong>Elbow flexion</strong> (highest priority)</li>
+    <li><strong>Shoulder stability / abduction / external rotation</strong></li>
+    <li>Hand sensibility &amp; function (hardest — long regeneration distance)</li>
+  </ol>
+  <p><strong>Tools:</strong></p>
+  <ul>
+    <li><strong>Neurolysis</strong> — if NAP present across a neuroma-in-continuity.</li>
+    <li><strong>Nerve grafting</strong> — postganglionic injury with a viable proximal root (e.g. sural cable graft).</li>
+    <li><strong>Nerve transfer</strong> — for preganglionic injury or to shorten reinnervation distance (a less-important functioning nerve drives a more-important denervated target).</li>
+    <li><strong>Free functioning muscle transfer (FFMT)</strong> — <strong>gracilis</strong> is most common (long tendon, proximal pedicle); used for late presentation/salvage and increasingly for primary pan-plexus reconstruction to restore elbow flexion and rudimentary grasp.</li>
+  </ul>
+  <p><strong>Common plexus transfers:</strong> spinal accessory nerve (SAN) → suprascapular nerve; radial (triceps) branch → axillary nerve (deltoid); <strong>Oberlin</strong> = ulnar nerve fascicle → biceps motor branch (elbow flexion); double fascicular transfer adds a median fascicle → brachialis branch. Common extraplexal donors: SAN, intercostal nerves, phrenic, contralateral C7.</p>
+  <p class="src">Source: Noland JAAOS 2019; Handthology — Plexus.</p>`},
+
+ {id:"sg-distal", title:"7. Distal nerve transfers (radial / median / ulnar)",
+  html:`
+  <p>Principles: synergistic, expendable donor (≥ M4); coaptation tension-free, end-to-end; <strong>"donor distal, recipient proximal."</strong> Operate at ~3–4 months to beat chronic axotomy. Limit tourniquet to &lt;30 min and avoid long-acting paralytics so donor function can be confirmed by stimulation. Advantage over tendon transfer: potential for independent finger motion; disadvantage: longer recovery (4–8 months to first reinnervation).</p>
+  <table>
+    <tr><th>Deficit</th><th>Transfer</th><th>Restores</th></tr>
+    <tr><td>Radial palsy (dual transfer)</td><td>FDS branch → ECRB branch; FCR/PL branch → PIN</td><td>Wrist extension; finger &amp; thumb extension</td></tr>
+    <tr><td>High median</td><td>ECRB branch → pronator teres branch</td><td>Forearm pronation</td></tr>
+    <tr><td>High median</td><td>Brachialis branch → AIN fascicle</td><td>Thumb &amp; finger flexion (FPL/FDP)</td></tr>
+    <tr><td>Low median</td><td>Terminal AIN (to PQ) → recurrent motor branch</td><td>Thumb opposition</td></tr>
+    <tr><td>High ulnar</td><td>Terminal AIN → ulnar deep motor fascicle</td><td>Intrinsics (pinch/grip, less clawing)</td></tr>
+    <tr><td>Median sensory</td><td>Ulnar 4th-webspace / DCU branch → median 1st-webspace</td><td>Critical thumb–index sensation</td></tr>
+  </table>
+  <p class="src">Source: Moore PRS 2014; Isaacs/Cochran BJJ 2019.</p>`},
+
+ {id:"sg-sets", title:"8. SETS — supercharged end-to-side (AIN → ulnar)",
+  html:`
+  <p>The <strong>supercharged end-to-side (SETS)</strong> transfer coapts the terminal AIN (to pronator quadratus) <em>end-to-side</em> into the ulnar deep motor fascicle in the distal forearm. Its purpose is to "babysit" distal motor end plates and add axons while a recovering proximal ulnar injury regenerates.</p>
+  <ul>
+    <li><strong>Axonotmetic (Sunderland II–III):</strong> severe/failed cubital tunnel, C8–T1 root injury, medial cord traction, Parsonage-Turner, CMT — SETS augments expected partial recovery.</li>
+    <li><strong>Neurotmetic (Sunderland IV–V):</strong> proximal complete lesions repaired distally — SETS reinnervates intrinsics faster than the slowly regenerating native axons.</li>
+  </ul>
+  <p>Motor recovery depends on <strong>time to end-plate reinnervation</strong> and <strong>number of regenerated motor axons</strong> reaching target — SETS improves both.</p>
+  <p class="src">Source: Barbour, Yee, Kahn, Mackinnon. J Hand Surg Am. 2012.</p>`},
+
+ {id:"sg-gap", title:"9. Nerve gap repair — the evidence",
+  html:`
+  <p>Reconstruction ladder for a nerve gap: <strong>tension-free direct repair → conduit → processed nerve allograft (PNA) → autograft.</strong></p>
+  <ul>
+    <li><strong>Direct repair</strong> when a tension-free coaptation is achievable (preferred).</li>
+    <li><strong>Conduits</strong> (e.g., PGA, collagen): best for <strong>short gaps (≤ ~15 mm)</strong>; depend on fibrin clot formation, can extrude; highest complication rate in some reviews.</li>
+    <li><strong>Processed nerve allograft (Avance):</strong> decellularized human nerve preserving endoneurial architecture; no donor morbidity; reliable across longer gaps (up to ~70 mm). The CHANGE/RANGER data show PNA superior S2PD vs synthetic conduits for digital gaps.</li>
+    <li><strong>Autograft</strong> (sural, MABC, PIN): historic gold standard; biologically superior (Schwann cells, growth factors) but adds donor-site morbidity and operative time; used for the longest gaps.</li>
+  </ul>
+  <p>Across RCTs and meta-analyses, autograft and PNA give similar sensory outcomes for digital nerves — but PNA avoids donor morbidity. Conduits perform well for the shortest gaps. For motor/mixed nerves, autograft M3+ recovery ranges ~48–84%.</p>
+  <p class="src">Source: Huayllani Ann Plast Surg 2020; Weber/Isaacs JAAOS 2023.</p>`},
+
+ {id:"sg-digital", title:"10. Digital nerve injury",
+  html:`
+  <p>Digital nerves are terminal branches of the median (radial 3½ digits volar) and ulnar (ulnar 1½ digits) nerves; they run with the digital vessels and are frequently injured alongside flexor tendon lacerations. Transected digital nerves <strong>will not heal without surgery</strong>; missed injuries risk neuropathic pain, cold intolerance, and hyperesthesia.</p>
+  <table>
+    <tr><th>Option</th><th>Best indication</th><th>Note</th></tr>
+    <tr><td>Observation</td><td>Low suspicion / patient declines</td><td>Neurapraxic &amp; axonotmetic expected to recover</td></tr>
+    <tr><td>Direct repair</td><td>Sharp laceration, ends approximate tension-free</td><td>Axons cross one coaptation; 63–74% ≥ "good"</td></tr>
+    <tr><td>Conduit</td><td>Gaps ≤ 15 mm</td><td>Easy, no donor morbidity; depends on fibrin clot</td></tr>
+    <tr><td>Allograft (PNA)</td><td>Gaps up to 70 mm</td><td>69–80% good/excellent; avoids donor morbidity</td></tr>
+    <tr><td>Autograft</td><td>Long gaps (&gt;70 mm; usable any length)</td><td>Biologically superior; donor-site cost</td></tr>
+  </table>
+  <p class="src">Source: Weber MB, Isaacs JE. JAAOS 2023 (incl. Table 1).</p>`}
+];
+
+/* -------- QUESTION BANK --------
+   correct = exact string in options[]; options are shuffled at runtime so the
+   correct letter varies every time. review = study-guide section id. -------- */
+const QUESTIONS = [
+ {topic:"Classification", q:"A patient straightens crossed legs and a transient foot 'pins-and-needles' resolves in minutes. The axon and all connective-tissue sheaths are intact — only conduction is blocked. What is this injury?",
+  options:["Neurapraxia (Sunderland I)","Axonotmesis (Sunderland II)","Neurotmesis (Sunderland V)","Sunderland IV"],
+  correct:"Neurapraxia (Sunderland I)", review:"sg-classification",
+  exp:"Neurapraxia = Sunderland I: a myelin/conduction block with intact axon and sheaths; full spontaneous recovery (minutes to months).", ref:"handnr"},
+
+ {topic:"Classification", q:"Which Sunderland degrees correspond to Seddon's 'axonotmesis'?",
+  options:["II and III","I only","IV and V","III, IV and V"],
+  correct:"II and III", review:"sg-classification",
+  exp:"Axonotmesis spans Sunderland II (endoneurial tubes intact) and III (tubes disrupted). Neurapraxia = I; neurotmesis = V.", ref:"barbour"},
+
+ {topic:"Classification", q:"In the MacKinnon-modified Sunderland system, which feature defines a degree IV (vs V) injury?",
+  options:["Epineurium remains intact (neuroma-in-continuity)","Complete transection with two stumps","Only myelin is affected","Endoneurial tubes are intact"],
+  correct:"Epineurium remains intact (neuroma-in-continuity)", review:"sg-classification",
+  exp:"Sunderland IV disrupts axon, endoneurium and perineurium but the epineurium stays intact — a neuroma-in-continuity. Degree V (neurotmesis) is complete transection.", ref:"handnr"},
+
+ {topic:"Regeneration", q:"What is the commonly cited rate of peripheral axon regeneration used to plan nerve surgery timing?",
+  options:["About 1 mm/day (≈1 inch/month)","About 1 cm/day","About 5 mm/day","About 1 mm/week"],
+  correct:"About 1 mm/day (≈1 inch/month)", review:"sg-wallerian",
+  exp:"Axons regenerate at roughly 1 mm/day or 1 inch/month — the basis for estimating reinnervation time versus motor end-plate survival.", ref:"noland"},
+
+ {topic:"Regeneration", q:"Wallerian degeneration of the distal stump typically begins within what window after axonal division?",
+  options:["24–48 hours","2–3 weeks","Immediately (within minutes)","6–8 weeks"],
+  correct:"24–48 hours", review:"sg-wallerian",
+  exp:"Schwann cells transdifferentiate and recruit macrophages to clear debris within 24–48 hours; regenerating sprouts are then guided by Bands of Büngner.", ref:"handnr"},
+
+ {topic:"Regeneration", q:"Schwann cells align into guidance channels that direct regenerating axon sprouts distally. These are called:",
+  options:["Bands of Büngner","Nodes of Ranvier","Renaut bodies","Pacinian columns"],
+  correct:"Bands of Büngner", review:"sg-wallerian",
+  exp:"Transdifferentiated Schwann cells form Bands of Büngner, the columns that guide axonal sprouts toward target.", ref:"handnr"},
+
+ {topic:"Anatomy", q:"Which connective-tissue layer functions as an extension of the blood–nerve barrier and maintains raised intrafascicular pressure?",
+  options:["Perineurium","Outer epineurium","Endoneurium","Mesoneurium"],
+  correct:"Perineurium", review:"sg-anatomy",
+  exp:"Perineurium bounds each fascicle, acts as a blood–nerve barrier, and holds internal pressure — so fascicles 'pooch' out from a cut end.", ref:"handnr"},
+
+ {topic:"Evaluation", q:"When should baseline EMG / nerve conduction studies first be obtained after an acute nerve injury, and why?",
+  options:["3–4 weeks — after Wallerian degeneration so denervation changes appear","Within 24 hours, to catch the injury early","At 6 months, once recovery has plateaued","Immediately, before any swelling"],
+  correct:"3–4 weeks — after Wallerian degeneration so denervation changes appear", review:"sg-eval",
+  exp:"Testing at 3–4 weeks allows fibrillations/denervation potentials to develop; earlier studies can be falsely reassuring because distal axons may still conduct for days.", ref:"noland"},
+
+ {topic:"Evaluation", q:"Intraoperatively, a nerve action potential (NAP) is recorded across a neuroma-in-continuity. What does this finding indicate?",
+  options:["Regeneration is occurring → neurolysis alone is appropriate","No regeneration → resect and graft","A preganglionic avulsion","The muscle end plates are dead"],
+  correct:"Regeneration is occurring → neurolysis alone is appropriate", review:"sg-eval",
+  exp:"A present NAP across the lesion predicts recovery and favors neurolysis; an absent NAP means resection and reconstruction are needed.", ref:"noland"},
+
+ {topic:"Evaluation", q:"On the MRC scale, what does a grade of 3 specifically require?",
+  options:["Full ROM against gravity (but not against added resistance)","Full ROM against gravity plus resistance","Movement only with gravity eliminated","A palpable contraction without movement"],
+  correct:"Full ROM against gravity (but not against added resistance)", review:"sg-eval",
+  exp:"M3 = moves the part through full arc against gravity. M4 adds resistance; M2 is movement only with gravity eliminated. Donors should be ≥ M4.", ref:"noland"},
+
+ {topic:"Plexus anatomy", q:"A trauma patient has ptosis, miosis, and anhidrosis on the injured side. This Horner syndrome is pathognomonic of avulsion of which root — and what does it tell you about graftability?",
+  options:["T1 — preganglionic, so that root cannot serve as a graft donor","C5 — postganglionic, ideal graft donor","C7 — divisional injury","T1 — postganglionic, good donor"],
+  correct:"T1 — preganglionic, so that root cannot serve as a graft donor", review:"sg-plexus-anat",
+  exp:"Horner syndrome indicates a T1 root avulsion (preganglionic). Preganglionic roots are torn from the cord with no proximal stump, so they cannot be grafted.", ref:"noland"},
+
+ {topic:"Plexus anatomy", q:"Which finding most strongly suggests a PREganglionic (avulsion) rather than postganglionic injury?",
+  options:["Rhomboid weakness with a preserved sensory NAP in insensate skin","An advancing distal Tinel sign","A palpable neuroma with absent NAP","Intact SSEPs and MEPs"],
+  correct:"Rhomboid weakness with a preserved sensory NAP in insensate skin", review:"sg-plexus-anat",
+  exp:"Very proximal muscle weakness (rhomboids/serratus) plus a preserved sensory NAP despite anesthesia (cell body still connected to DRG) point to a preganglionic lesion. Intact SSEP/MEP indicate postganglionic.", ref:"noland"},
+
+ {topic:"Plexus anatomy", q:"Place the brachial plexus structures in correct proximal-to-distal order.",
+  options:["Roots → Trunks → Divisions → Cords → Branches","Roots → Cords → Trunks → Divisions → Branches","Trunks → Roots → Divisions → Cords → Branches","Roots → Divisions → Trunks → Cords → Branches"],
+  correct:"Roots → Trunks → Divisions → Cords → Branches", review:"sg-plexus-anat",
+  exp:"Roots (C5–T1) → Trunks (upper/middle/lower) → Divisions (ant/post) → Cords (lateral/posterior/medial) → terminal Branches.", ref:"handplx"},
+
+ {topic:"Plexus reconstruction", q:"In reconstructing a flail upper extremity after brachial plexus injury, which function is the HIGHEST priority to restore?",
+  options:["Elbow flexion","Wrist extension","Intrinsic hand function","Shoulder external rotation"],
+  correct:"Elbow flexion", review:"sg-plexus-recon",
+  exp:"Elbow flexion is the top reconstructive priority, followed by shoulder stability/abduction/ER, then the (much harder) hand.", ref:"noland"},
+
+ {topic:"Plexus reconstruction", q:"The 'Oberlin transfer' for restoring elbow flexion uses which donor and recipient?",
+  options:["An ulnar nerve fascicle → biceps motor branch","Spinal accessory nerve → suprascapular nerve","Intercostal nerves → musculocutaneous nerve","Median fascicle → brachialis branch"],
+  correct:"An ulnar nerve fascicle → biceps motor branch", review:"sg-plexus-recon",
+  exp:"The Oberlin transfer coapts an expendable ulnar fascicle to the biceps motor branch. Adding a median fascicle → brachialis branch makes it a 'double' transfer.", ref:"noland"},
+
+ {topic:"Plexus reconstruction", q:"Which muscle is the most commonly used free functioning muscle transfer (FFMT) for brachial plexus reconstruction, and why?",
+  options:["Gracilis — long tendon and proximally based neurovascular pedicle","Latissimus dorsi — broad surface area","Pectoralis major — strong contraction","Rectus femoris — large bulk"],
+  correct:"Gracilis — long tendon and proximally based neurovascular pedicle", review:"sg-plexus-recon",
+  exp:"Gracilis is favored: its proximal pedicle allows earlier reinnervation and its long tendon reaches into the forearm for hand reanimation.", ref:"noland"},
+
+ {topic:"Plexus reconstruction", q:"A patient presents 16 months after a complete pan-plexus avulsion with no reinnervation. Why is primary nerve grafting/transfer generally not offered at this point?",
+  options:["The motor end plates have irreversibly degenerated, so a signal can't restore muscle function","Nerves no longer conduct any electrical signal anywhere","Grafts cannot be harvested this late","The dorsal root ganglion has regenerated"],
+  correct:"The motor end plates have irreversibly degenerated, so a signal can't restore muscle function", review:"sg-plexus-recon",
+  exp:"Beyond ~12 months, regeneration distance exceeds motor end-plate survival; reinnervation arrives too late. Salvage shifts to FFMT, tendon transfer, or arthrodesis.", ref:"noland"},
+
+ {topic:"Distal transfers", q:"In the preferred dual median-to-radial transfer for radial nerve palsy, which coaptation restores WRIST extension?",
+  options:["FDS branch (median) → ECRB branch (radial)","FCR/PL branch → PIN","Pronator teres branch → ECRB","Brachialis branch → AIN"],
+  correct:"FDS branch (median) → ECRB branch (radial)", review:"sg-distal",
+  exp:"FDS branch → ECRB branch restores wrist extension; the FCR/PL branch → PIN restores finger/thumb extension. Together they exploit synergistic tenodesis.", ref:"moore"},
+
+ {topic:"Distal transfers", q:"To restore thumb and finger flexion in a high median nerve injury, which transfer is used?",
+  options:["Brachialis branch (musculocutaneous) → AIN fascicle","ECRB branch → pronator teres branch","Terminal AIN → recurrent motor branch","SAN → suprascapular nerve"],
+  correct:"Brachialis branch (musculocutaneous) → AIN fascicle", review:"sg-distal",
+  exp:"The brachialis branch is transferred to the AIN fascicle for FPL/FDP function — performed only when the musculocutaneous nerve is intact to avoid downgrading elbow flexion.", ref:"moore"},
+
+ {topic:"Distal transfers", q:"What is the standard donor used to reinnervate the ulnar intrinsic muscles in a high ulnar nerve injury?",
+  options:["Terminal anterior interosseous nerve (to pronator quadratus)","Posterior interosseous nerve trunk","Lateral antebrachial cutaneous nerve","Pronator teres branch"],
+  correct:"Terminal anterior interosseous nerve (to pronator quadratus)", review:"sg-distal",
+  exp:"The terminal AIN (to PQ) is transferred to the ulnar deep motor fascicle to restore intrinsics, improving pinch/grip and reducing clawing.", ref:"moore"},
+
+ {topic:"Distal transfers", q:"Which principle/mantra guides where to cut donor and recipient nerves in a transfer?",
+  options:["'Donor distal, recipient proximal' — maximizes reach for tension-free coaptation","'Donor proximal, recipient distal'","Cut both as proximally as possible","Cut both as distally as possible"],
+  correct:"'Donor distal, recipient proximal' — maximizes reach for tension-free coaptation", review:"sg-distal",
+  exp:"Transecting the donor as distally and the recipient as proximally as possible maximizes length so the repair is tension-free and close to target.", ref:"moore"},
+
+ {topic:"Distal transfers", q:"During donor-nerve evaluation for a nerve transfer, why is tourniquet time kept under ~30 minutes and long-acting paralytics avoided?",
+  options:["To preserve the ability to confirm donor function with nerve stimulation","To reduce blood loss only","To prevent compartment syndrome","Because anesthesia mandates it for all hand cases"],
+  correct:"To preserve the ability to confirm donor function with nerve stimulation", review:"sg-distal",
+  exp:"Ischemic neurapraxia from a long tourniquet, or residual paralytic, blocks the stimulation needed to verify donor function and confirm the recipient is non-functional.", ref:"moore"},
+
+ {topic:"SETS", q:"What is the central rationale of the supercharged end-to-side (SETS) AIN-to-ulnar transfer?",
+  options:["'Babysit' distal motor end plates and add axons while a recovering proximal ulnar injury regenerates","Permanently replace all ulnar motor function with median axons","Provide sensory recovery to the small finger","Bridge a large nerve gap as a conduit"],
+  correct:"'Babysit' distal motor end plates and add axons while a recovering proximal ulnar injury regenerates", review:"sg-sets",
+  exp:"SETS coapts the terminal AIN end-to-side into the ulnar deep motor fascicle, preserving end plates and supercharging axon counts until native ulnar axons arrive.", ref:"barbour"},
+
+ {topic:"SETS", q:"Per Barbour & Mackinnon, which scenario is an AXONOTMETIC (Sunderland II–III) indication for a SETS transfer?",
+  options:["Severe or failed cubital tunnel with intrinsic wasting","Complete laceration of the ulnar nerve at the wrist","A 4 cm nerve gap requiring a bridge","Isolated digital nerve laceration"],
+  correct:"Severe or failed cubital tunnel with intrinsic wasting", review:"sg-sets",
+  exp:"Axonotmetic SETS indications include severe/failed cubital tunnel, C8–T1 root injury, medial cord traction, Parsonage-Turner, and CMT. Neurotmetic (IV–V) covers proximal complete lesions.", ref:"barbour"},
+
+ {topic:"Gap repair", q:"Synthetic nerve conduits are generally best suited for nerve gaps of what length?",
+  options:["Short gaps, roughly ≤ 15 mm","Any length up to 70 mm","Only gaps > 30 mm","30–50 mm gaps"],
+  correct:"Short gaps, roughly ≤ 15 mm", review:"sg-gap",
+  exp:"Conduits perform best across short gaps (≤ ~15 mm); they depend on fibrin-clot formation and can extrude. Longer gaps favor PNA or autograft.", ref:"weber"},
+
+ {topic:"Gap repair", q:"What is the chief advantage of processed nerve allograft (PNA) over autograft for digital nerve gaps?",
+  options:["Comparable sensory recovery without donor-site morbidity","It is far cheaper than all other options","It regenerates faster than 1 mm/day","It contains living donor Schwann cells indefinitely"],
+  correct:"Comparable sensory recovery without donor-site morbidity", review:"sg-gap",
+  exp:"Across RCTs/meta-analyses PNA and autograft give similar digital sensory outcomes, but PNA avoids harvesting a donor nerve. Autograft remains biologically superior but costs donor morbidity.", ref:"huayllani"},
+
+ {topic:"Gap repair", q:"Which option is the preferred FIRST choice for a nerve gap when feasible?",
+  options:["Tension-free direct end-to-end repair","Synthetic conduit","Processed nerve allograft","Sural autograft"],
+  correct:"Tension-free direct end-to-end repair", review:"sg-gap",
+  exp:"Direct end-to-end repair is preferred whenever a tension-free coaptation is achievable; bridging techniques are used only when it is not.", ref:"huayllani"},
+
+ {topic:"Digital nerve", q:"A sharp digital nerve laceration is repaired directly. Roughly what proportion of patients achieve at least 'good' sensation?",
+  options:["About 63–74%","About 20%","Essentially 100%","Under 40%"],
+  correct:"About 63–74%", review:"sg-digital",
+  exp:"Per Weber/Isaacs, direct repair yields ≥'good' sensation in ~63–74%; allograft 69–80% good/excellent for appropriate gaps.", ref:"weber"},
+
+ {topic:"Digital nerve", q:"Which digits' volar surfaces are supplied by the ULNAR nerve's terminal digital branches?",
+  options:["Ulnar half of the ring finger and the entire little finger","Thumb, index, and middle","Radial 3½ digits","Index and middle only"],
+  correct:"Ulnar half of the ring finger and the entire little finger", review:"sg-digital",
+  exp:"The ulnar nerve supplies the volar ulnar ring finger and little finger; the median nerve covers thumb, index, middle, and the radial ring finger.", ref:"weber"},
+
+ {topic:"Digital nerve", q:"For a digital nerve gap of approximately 25 mm in a clean wound, which reconstruction avoids donor-site morbidity while reliably bridging that length?",
+  options:["Processed nerve allograft","Direct repair under tension","A short conduit","Observation"],
+  correct:"Processed nerve allograft", review:"sg-digital",
+  exp:"At ~25 mm a conduit is beyond its reliable range and direct repair would be under tension; PNA reliably bridges up to ~70 mm without harvesting a donor nerve.", ref:"weber"}
+];
+
+/* -------- FLASHCARDS -------- */
+const FLASH = [
+ {f:"Seddon ↔ Sunderland mapping", b:"Neurapraxia = Sunderland I · Axonotmesis = Sunderland II–III · Neurotmesis = Sunderland V (MacKinnon adds VI = mixed).", ref:"handnr"},
+ {f:"Axon regeneration rate", b:"≈ 1 mm/day (≈ 1 inch/month).", ref:"noland"},
+ {f:"Wallerian degeneration onset", b:"Begins within 24–48 h; Schwann cells + macrophages clear debris; sprouts guided by Bands of Büngner.", ref:"handnr"},
+ {f:"Horner syndrome means…", b:"T1 root avulsion (preganglionic). Triad: miosis, ptosis, anhidrosis.", ref:"noland"},
+ {f:"Pre- vs postganglionic — why it matters", b:"Preganglionic = avulsion, no proximal stump → cannot graft (need transfers). Postganglionic = viable proximal root can be a graft donor.", ref:"noland"},
+ {f:"Plexus order (proximal→distal)", b:"Roots → Trunks → Divisions → Cords → Branches ('Real Texans Drink Cold Beer').", ref:"handplx"},
+ {f:"Root → function shorthand", b:"C5 shoulder · C6 elbow · C7 wrist · C8/T1 hand.", ref:"noland"},
+ {f:"#1 reconstruction priority in a flail arm", b:"Elbow flexion (then shoulder stability/abduction/ER, then hand).", ref:"noland"},
+ {f:"Oberlin transfer", b:"Ulnar nerve fascicle → biceps motor branch (restores elbow flexion). Double = add median fascicle → brachialis branch.", ref:"noland"},
+ {f:"Most common FFMT", b:"Gracilis — proximal pedicle (earlier reinnervation) + long tendon (reaches forearm for hand).", ref:"noland"},
+ {f:"When to get baseline EMG/NCS", b:"3–4 weeks post-injury (after Wallerian degeneration); earlier risks false negatives.", ref:"noland"},
+ {f:"NAP across a neuroma-in-continuity", b:"Present → recovery expected → neurolysis. Absent → resect & reconstruct.", ref:"noland"},
+ {f:"Radial palsy dual transfer", b:"FDS→ECRB (wrist extension) + FCR/PL→PIN (finger/thumb extension).", ref:"moore"},
+ {f:"High median: restore thumb/finger flexion", b:"Brachialis branch → AIN fascicle (only if musculocutaneous intact).", ref:"moore"},
+ {f:"High ulnar: restore intrinsics", b:"Terminal AIN (to PQ) → ulnar deep motor fascicle.", ref:"moore"},
+ {f:"Nerve-transfer mantra", b:"'Donor distal, recipient proximal' — for tension-free coaptation near target.", ref:"moore"},
+ {f:"SETS purpose", b:"Supercharge end-to-side: babysit distal end plates + add axons while a recovering proximal ulnar injury regenerates.", ref:"barbour"},
+ {f:"Conduit gap limit", b:"Best for short gaps ≤ ~15 mm; depends on fibrin clot, can extrude.", ref:"weber"},
+ {f:"PNA vs autograft (digital)", b:"Similar sensory recovery; PNA avoids donor-site morbidity. Autograft biologically superior but costs a donor nerve.", ref:"huayllani"},
+ {f:"Gap-repair ladder", b:"Direct repair → conduit → processed nerve allograft → autograft.", ref:"huayllani"},
+ {f:"Donor muscle strength for transfer", b:"Should be ≥ MRC grade 4 (expect some downgrade after transfer).", ref:"moore"},
+ {f:"MRC grade 3 vs 4", b:"M3 = full ROM against gravity; M4 = against gravity + added resistance.", ref:"noland"}
+];
+
+/* -------- Q&A BANK (searchable, literature-backed) -------- */
+const QA = [
+ {q:"What is the Oberlin transfer?", a:"Transfer of an expendable ulnar nerve fascicle to the biceps motor branch to restore elbow flexion in C5–C6 injuries. Adding a median nerve fascicle to the brachialis branch makes it a 'double fascicular' transfer. [Noland JAAOS 2019]", ref:"noland", k:"oberlin elbow flexion biceps ulnar fascicle double"},
+ {q:"What does Horner syndrome indicate in a plexus injury?", a:"A T1 root avulsion (preganglionic). The triad is miosis, ptosis, and anhidrosis. Because preganglionic roots are torn from the cord, they cannot serve as graft donors. [Noland JAAOS 2019]", ref:"noland", k:"horner t1 avulsion preganglionic ptosis miosis anhidrosis"},
+ {q:"How do I tell preganglionic from postganglionic injury?", a:"Preganglionic (avulsion) clues: Horner syndrome, very proximal muscle weakness (rhomboids, serratus anterior), pseudomeningocele on CT myelogram, and a preserved sensory NAP in anesthetic skin (cell body still attached to DRG). Intact SSEP/MEP and a viable proximal stump indicate postganglionic. Only postganglionic roots can be grafted. [Noland JAAOS 2019]", ref:"noland", k:"preganglionic postganglionic ganglion drg graft rhomboid pseudomeningocele nap ssep mep"},
+ {q:"What is the order of reconstruction priorities after plexus injury?", a:"1) Elbow flexion (highest), 2) shoulder stability/abduction/external rotation, 3) hand sensibility and function (hardest, due to long regeneration distance). [Noland JAAOS 2019]", ref:"noland", k:"priority elbow flexion shoulder hand reconstruction order"},
+ {q:"Which muscle is used for free functioning muscle transfer (FFMT) and why?", a:"The gracilis is most common: its proximally based neurovascular pedicle allows earlier reinnervation and its long tendon reaches into the forearm for hand reanimation. Used for late/salvage cases and increasingly in primary pan-plexus reconstruction. [Noland JAAOS 2019]", ref:"noland", k:"ffmt free functioning muscle gracilis pan plexus"},
+ {q:"When should I order EMG after a nerve injury?", a:"Baseline EMG/NCS at 3–4 weeks, after Wallerian degeneration so denervation potentials (fibrillations) appear. Earlier testing can be falsely reassuring because distal axons may keep conducting for ~3–11 days. [Noland JAAOS 2019; Handthology Nerve Repair]", ref:"noland", k:"emg ncs electrodiagnostic timing 3 4 weeks wallerian fibrillation"},
+ {q:"What does an intraoperative NAP tell me?", a:"A nerve action potential recorded across a neuroma-in-continuity means axons are conducting → recovery is expected → neurolysis alone. An absent NAP means resect and reconstruct. [Noland JAAOS 2019]", ref:"noland", k:"nap nerve action potential neuroma in continuity neurolysis intraoperative"},
+ {q:"Explain the Seddon and Sunderland classifications.", a:"Seddon: neurapraxia (conduction block), axonotmesis (axon disrupted, sheaths variable), neurotmesis (complete). Sunderland I–V: I = neurapraxia; II = axon + intact endoneurial tubes; III = tubes disrupted; IV = perineurium disrupted, epineurium intact (neuroma-in-continuity); V = complete transection. MacKinnon adds VI = mixed. Sunderland I–II recover spontaneously; IV–V need surgery. [Handthology Nerve Repair]", ref:"handnr", k:"seddon sunderland classification neurapraxia axonotmesis neurotmesis mackinnon degree"},
+ {q:"How fast do nerves regenerate?", a:"About 1 mm/day, or roughly 1 inch/month. This rate, weighed against motor end-plate survival, drives all surgical timing. [Noland JAAOS 2019]", ref:"noland", k:"regeneration rate 1mm day inch month speed"},
+ {q:"What are Bands of Büngner?", a:"Columns formed by transdifferentiated Schwann cells that guide regenerating axon sprouts from the proximal stump toward the distal target. [Handthology Nerve Repair]", ref:"handnr", k:"bands bungner schwann guidance regeneration"},
+ {q:"What is the dual nerve transfer for radial nerve palsy?", a:"Median-to-radial: FDS branch → ECRB branch (wrist extension) and FCR/PL branch → PIN (finger and thumb extension). It uses synergistic tenodesis motion to simplify re-education. [Moore PRS 2014]", ref:"moore", k:"radial palsy dual transfer fds ecrb fcr pl pin wrist finger extension"},
+ {q:"How do you restore pronation with a nerve transfer?", a:"The preferred option is the ECRB branch of the radial nerve → pronator teres branch of the median nerve, since wrist extension and pronation are often used together. [Moore PRS 2014]", ref:"moore", k:"pronation pronator teres ecrb transfer median"},
+ {q:"How do you restore finger/thumb flexion in a high median injury?", a:"Transfer the brachialis branch of the musculocutaneous nerve to the AIN fascicle — only when the musculocutaneous nerve is intact, to avoid downgrading elbow flexion. [Moore PRS 2014]", ref:"moore", k:"high median flexion brachialis ain fpl fdp transfer"},
+ {q:"How do you reinnervate ulnar intrinsics?", a:"Transfer the terminal AIN (to pronator quadratus) to the ulnar deep motor fascicle — often after neurolysis to avoid a graft. It improves pinch/grip and reduces clawing. [Moore PRS 2014]", ref:"moore", k:"ulnar intrinsic ain pronator quadratus deep motor fascicle clawing pinch grip"},
+ {q:"What is a SETS (supercharged end-to-side) transfer?", a:"The terminal AIN is coapted end-to-side into the ulnar deep motor fascicle in the distal forearm to 'babysit' distal motor end plates and add axons while a recovering proximal ulnar injury regenerates. Axonotmetic indications (Sunderland II–III): severe/failed cubital tunnel, C8–T1 root injury, medial cord traction, Parsonage-Turner, CMT. Neurotmetic (IV–V): proximal complete lesions. [Barbour/Mackinnon JHS 2012]", ref:"barbour", k:"sets supercharge end to side ain ulnar babysit cubital tunnel sunderland axonotmetic neurotmetic"},
+ {q:"What gap length suits a nerve conduit?", a:"Short gaps, roughly ≤ 15 mm. Conduits depend on fibrin-clot formation and can extrude. Longer gaps favor processed nerve allograft or autograft. [Weber/Isaacs JAAOS 2023]", ref:"weber", k:"conduit gap length 15 mm short fibrin clot"},
+ {q:"Allograft vs autograft for digital nerves — which is better?", a:"Sensory outcomes are similar. Processed nerve allograft (e.g., Avance, up to ~70 mm) avoids donor-site morbidity; autograft is biologically superior (Schwann cells, growth factors) but costs a donor nerve and operative time. Conduits work best for the shortest gaps. [Huayllani Ann Plast Surg 2020; Weber/Isaacs JAAOS 2023]", ref:"huayllani", k:"allograft autograft conduit digital nerve gap sensory recovery pna avance"},
+ {q:"What is the gap-repair reconstruction ladder?", a:"Tension-free direct repair → conduit (short gaps) → processed nerve allograft → autograft (longest gaps). Direct repair is always preferred when achievable without tension. [Huayllani Ann Plast Surg 2020]", ref:"huayllani", k:"ladder algorithm gap repair direct conduit allograft autograft"},
+ {q:"Which nerves supply the digits?", a:"Median nerve → volar thumb, index, middle, and radial half of the ring finger (radial 3½ digits). Ulnar nerve → ulnar half of ring finger and the little finger. They travel with the digital vessels and are often injured with flexor tendon lacerations. [Weber/Isaacs JAAOS 2023]", ref:"weber", k:"digital nerve median ulnar innervation thumb index ring little finger"},
+ {q:"What are the layers of a peripheral nerve?", a:"From inside out: axon (Schwann-cell myelin) in an endoneurial tube (endoneurium) → fascicle bounded by perineurium (blood–nerve barrier) → inner epineurium grouping fascicles → outer epineurium with surface vasa nervorum. [Handthology Nerve Repair]", ref:"handnr", k:"anatomy layers endoneurium perineurium epineurium fascicle axon myelin schwann vasa nervorum"},
+ {q:"What is the timing window for plexus surgery?", a:"Sharp lacerations → immediate primary repair; blunt rupture → tag and repair at 3–4 weeks; closed injuries → explore at 3–6 months (or 3–6 weeks if avulsion is strongly suspected). Nerve grafting/transfer is generally not offered beyond ~12 months (some distal transfers to 12–18 months). [Noland JAAOS 2019]", ref:"noland", k:"timing surgery plexus 3 6 months avulsion late 12 months window"},
+ {q:"Why must a donor muscle be at least MRC grade 4?", a:"Some downgrade in strength is expected after transfer, so starting at ≥ M4 preserves useful function. The donor should also be expendable and ideally synergistic. [Moore PRS 2014]", ref:"moore", k:"donor mrc grade 4 expendable synergistic strength transfer"}
+];
+
+/* ====================================================================
+   ENGINE
+   ==================================================================== */
+let state = {
+  startTime:null, timerInt:null, streak:0, totalCorrect:0, totalAnswered:0,
+  sessionOrder:[], sessionPos:0, answered:false, fOrder:[], fIdx:0, ended:false
+};
+const TIME_LIMIT = 30*60; // seconds
+const STREAK_GOAL = 10;
+
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function ensureTimer(){
+  if(state.startTime) return;
+  state.startTime=Date.now();
+  document.getElementById('statusBar').style.visibility='visible';
+  state.timerInt=setInterval(updateTimer,1000);
+  updateTimer();
+}
+function updateTimer(){
+  const el=Math.floor((Date.now()-state.startTime)/1000);
+  const m=Math.floor(el/60), s=el%60;
+  document.getElementById('timerPill').textContent='⏱ '+m+':'+String(s).padStart(2,'0');
+  if(el>=TIME_LIMIT && !state.ended) endSession('time');
+}
+function updateStreakUI(){
+  document.getElementById('streakPill').textContent='🔥 Streak '+state.streak;
+}
+
+/* ---- entry points ---- */
+function startBeginner(){ ensureTimer(); buildStudyGuide(); show('studyguide'); }
+function startExpert(){ ensureTimer(); startQuiz(); }
+function goQuiz(){ ensureTimer(); startQuiz(); }
+function goFlashBrowse(){ ensureTimer(); startFlash(); }
+function goAsk(){ ensureTimer(); searchQA(); show('ask'); }
+
+/* ---- study guide ---- */
+function buildStudyGuide(){
+  const toc=document.getElementById('toc'); const cont=document.getElementById('sgContent');
+  if(toc.dataset.built) return;
+  toc.innerHTML=SG.map(s=>`<a href="#${s.id}" onclick="event.preventDefault();document.getElementById('${s.id}').scrollIntoView({behavior:'smooth'})">${s.title}</a>`).join('');
+  cont.innerHTML=SG.map(s=>`<div class="card sgsec" id="${s.id}"><h3 style="margin-top:0">${s.title}</h3>${s.html}</div>`).join('');
+  toc.dataset.built="1";
+}
+
+/* ---- interleaved session: MCQ and flashcards alternate, both feed the streak ---- */
+function buildSession(){
+  const qs=shuffle(QUESTIONS.map((_,i)=>i));
+  const fs=shuffle(FLASH.map((_,i)=>i));
+  const seq=[]; let qi=0, fi=0, turn=0;
+  while(qi<qs.length || fi<fs.length){
+    if(turn%2===0){ qi<qs.length ? seq.push({type:'mcq',idx:qs[qi++]}) : seq.push({type:'flash',idx:fs[fi++]}); }
+    else          { fi<fs.length ? seq.push({type:'flash',idx:fs[fi++]}) : seq.push({type:'mcq',idx:qs[qi++]}); }
+    turn++;
+  }
+  state.sessionOrder=seq; state.sessionPos=0;
+}
+function renderDots(){
+  let dots='';for(let i=0;i<STREAK_GOAL;i++){dots+=`<span class="dot ${i<state.streak?'on':''}"></span>`;}
+  document.getElementById('streakDots').innerHTML=dots;
+}
+function startQuiz(){
+  if(!state.sessionOrder.length || state.sessionPos>=state.sessionOrder.length){ buildSession(); }
+  renderItem(); show('quiz');
+}
+function renderItem(){
+  state.answered=false;
+  const item=state.sessionOrder[state.sessionPos];
+  document.getElementById('qCount').textContent='Correct: '+state.totalCorrect+' / '+state.totalAnswered;
+  renderDots();
+  const fb=document.getElementById('qFeedback'); fb.className='feedback'; fb.innerHTML='';
+  document.getElementById('nextBtn').style.display='none';
+  if(item.type==='mcq') renderMCQ(QUESTIONS[item.idx]);
+  else renderFlashItem(FLASH[item.idx]);
+}
+function renderMCQ(q){
+  document.getElementById('mcqBlock').style.display='block';
+  document.getElementById('flashBlock').style.display='none';
+  document.getElementById('qTopic').textContent=q.topic;
+  document.getElementById('qText').textContent=q.q;
+  const opts=shuffle(q.options); const keys=['A','B','C','D','E'];
+  document.getElementById('qChoices').innerHTML=opts.map((o,i)=>
+    `<button class="choice" data-val="${encodeURIComponent(o)}" onclick="answer(this)"><span class="key">${keys[i]}</span><span>${o}</span></button>`).join('');
+}
+function renderFlashItem(c){
+  document.getElementById('mcqBlock').style.display='none';
+  document.getElementById('flashBlock').style.display='block';
+  document.getElementById('qTopic').textContent='Flashcard';
+  document.getElementById('qFlashInner').classList.remove('flipped');
+  document.getElementById('qfFront').textContent=c.f;
+  document.getElementById('qfBack').innerHTML=c.b+`<div class="src" style="margin-top:10px">${REFS[c.ref]}</div>`;
+  document.getElementById('flashGrade').style.display='none';
+}
+function revealFlash(){
+  if(state.answered) return;
+  const inner=document.getElementById('qFlashInner');
+  if(!inner.classList.contains('flipped')){
+    inner.classList.add('flipped');
+    document.getElementById('flashGrade').style.display='flex';
+  }
+}
+function gradeFlash(knew){
+  if(state.answered) return;
+  state.answered=true;
+  document.getElementById('flashGrade').style.display='none';
+  const c=FLASH[state.sessionOrder[state.sessionPos].idx];
+  const fb=knew
+    ? `<strong>✓ Counted.</strong> Nice recall.<div class="src">${REFS[c.ref]}</div>`
+    : `<strong>✕ Streak reset.</strong> Review the answer above, then continue.<div class="src">${REFS[c.ref]}</div>`;
+  recordResult(knew, fb);
+}
+function answer(btn){
+  if(state.answered) return;
+  state.answered=true;
+  const q=QUESTIONS[state.sessionOrder[state.sessionPos].idx];
+  const chosen=decodeURIComponent(btn.dataset.val);
+  const correct = chosen===q.correct;
+  document.querySelectorAll('#qChoices .choice').forEach(c=>{
+    const v=decodeURIComponent(c.dataset.val);
+    c.disabled=true;
+    if(v===q.correct) c.classList.add('correct');
+    if(v===chosen && !correct) c.classList.add('wrong');
+  });
+  let fb;
+  if(correct){
+    fb=`<strong>✓ Correct.</strong> ${q.exp}<div class="src">${REFS[q.ref]}</div>`;
+  } else {
+    const sec=SG.find(s=>s.id===q.review);
+    fb=`<strong>✕ Not quite.</strong> The correct answer is highlighted.<br>${q.exp}
+      <div style="margin-top:8px"><button class="reviewlink" onclick="reviewSection('${q.review}')">📖 Review: ${sec?sec.title:'reading'}</button></div>
+      <div class="src">${REFS[q.ref]}</div>`;
+  }
+  recordResult(correct, fb);
+}
+/* shared scoring + streak + end-trigger for BOTH item types */
+function recordResult(correct, feedbackHTML){
+  state.totalAnswered++;
+  if(correct){ state.streak++; state.totalCorrect++; } else { state.streak=0; }
+  updateStreakUI(); renderDots();
+  document.getElementById('qCount').textContent='Correct: '+state.totalCorrect+' / '+state.totalAnswered;
+  const fb=document.getElementById('qFeedback');
+  fb.className='feedback '+(correct?'ok':'no')+' show';
+  fb.innerHTML=feedbackHTML;
+  document.getElementById('nextBtn').style.display='inline-block';
+  if(correct && state.streak>=STREAK_GOAL){ setTimeout(()=>endSession('streak'),900); }
+}
+function reviewSection(id){
+  buildStudyGuide(); show('studyguide');
+  setTimeout(()=>{const e=document.getElementById(id);if(e){e.scrollIntoView({behavior:'smooth'});e.style.boxShadow='0 0 0 3px var(--accent)';setTimeout(()=>e.style.boxShadow='',2000);}},120);
+}
+function nextItem(){
+  state.sessionPos++;
+  if(state.sessionPos>=state.sessionOrder.length){ buildSession(); }
+  renderItem();
+}
+
+/* ---- flashcards ---- */
+function startFlash(){
+  if(!state.fOrder.length || state.fIdx>=state.fOrder.length){ state.fOrder=shuffle(FLASH.map((_,i)=>i)); state.fIdx=0; }
+  renderFlash(); show('flash');
+}
+function renderFlash(){
+  const c=FLASH[state.fOrder[state.fIdx]];
+  document.getElementById('flashInner').classList.remove('flipped');
+  document.getElementById('fFront').textContent=c.f;
+  document.getElementById('fBack').innerHTML=c.b+`<div class="src" style="margin-top:10px">${REFS[c.ref]}</div>`;
+  document.getElementById('fCount').textContent=(state.fIdx+1)+' / '+state.fOrder.length;
+}
+function flipCard(){ document.getElementById('flashInner').classList.toggle('flipped'); }
+function nextFlash(){
+  state.fIdx++;
+  if(state.fIdx>=state.fOrder.length){ state.fOrder=shuffle(FLASH.map((_,i)=>i)); state.fIdx=0; }
+  renderFlash();
+}
+
+/* ---- ask / search ---- */
+function searchQA(){
+  const term=(document.getElementById('askInput').value||'').toLowerCase().trim();
+  const box=document.getElementById('qaResults');
+  let list=QA;
+  if(term){
+    const words=term.split(/\s+/);
+    list=QA.map(item=>{
+      const hay=(item.q+' '+item.a+' '+item.k).toLowerCase();
+      let score=0; words.forEach(w=>{ if(hay.includes(w)) score++; });
+      return {item,score};
+    }).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).map(x=>x.item);
+  }
+  if(!list.length){
+    box.innerHTML='<p class="note">No match. Try a keyword like <span class="kbd">Oberlin</span>, <span class="kbd">Horner</span>, <span class="kbd">conduit</span>, <span class="kbd">SETS</span>, <span class="kbd">EMG</span>, or <span class="kbd">priority</span>.</p>';
+    return;
+  }
+  box.innerHTML=list.slice(0,12).map((it,i)=>
+    `<div class="qa-item ${term?'open':''}" onclick="this.classList.toggle('open')">
+      <div class="qa-q">${it.q}</div>
+      <div class="qa-a">${it.a}<div class="src">${REFS[it.ref]}</div></div>
+    </div>`).join('');
+}
+
+/* ---- session control ---- */
+function startHome(){ ensureTimer(); show('home'); }
+function endSession(reason){
+  if(state.ended) return; state.ended=true;
+  clearInterval(state.timerInt);
+  const el=state.startTime?Math.floor((Date.now()-state.startTime)/1000):0;
+  const m=Math.floor(el/60), s=el%60;
+  let title='Session complete', msg='';
+  if(reason==='streak'){ title='🏆 Mastery demonstrated!'; msg='You answered 10 questions correctly in a row.'; }
+  else if(reason==='time'){ title='⏱ Time\'s up'; msg='You hit the 30-minute mark — nice work.'; }
+  else { title='✅ Session ended'; msg='Thanks for reviewing.'; }
+  document.getElementById('endTitle').textContent=title;
+  document.getElementById('endMsg').textContent=msg;
+  document.getElementById('endStats').innerHTML=
+    `<div><strong>Time:</strong> ${m}m ${s}s</div>
+     <div><strong>Questions answered:</strong> ${state.totalAnswered}</div>
+     <div><strong>Correct:</strong> ${state.totalCorrect}${state.totalAnswered?(' ('+Math.round(100*state.totalCorrect/state.totalAnswered)+'%)'):''}</div>
+     <div><strong>Best result:</strong> longest streak counted toward the 10-in-a-row goal</div>`;
+  document.getElementById('statusBar').style.visibility='hidden';
+  show('end');
+}
+function restart(){
+  clearInterval(state.timerInt);
+  state={startTime:null,timerInt:null,streak:0,totalCorrect:0,totalAnswered:0,sessionOrder:[],sessionPos:0,answered:false,fOrder:[],fIdx:0,ended:false};
+  document.getElementById('timerPill').textContent='⏱ 0:00';
+  document.getElementById('streakPill').textContent='🔥 Streak 0';
+  document.getElementById('statusBar').style.visibility='hidden';
+  show('welcome');
+}
+
+/* ---- references footer ---- */
+document.getElementById('refList').innerHTML=Object.values(REFS).map(r=>`<div style="margin:4px 0">• ${r}</div>`).join('');
+
+/* From the welcome screen, beginners get the study guide; everyone can reach the
+   menu via study-guide "Back to menu". Wire the menu route used there. */
+function home(){ show('home'); }
+</script>
+</body>
+</html>
